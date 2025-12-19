@@ -79,9 +79,3 @@ class SwaggerParser:
             return content["application/json"].get("schema", {})
         
         return {}
-
-
-parse=SwaggerParser()
-
-teste = parse.parse('H:/repos/AITestGenerator/swagger.json')
-print(teste)
