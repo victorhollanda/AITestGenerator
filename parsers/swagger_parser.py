@@ -3,7 +3,7 @@ from core.models import Endpoint, Parameter, Response
 
 
 class SwaggerParser:
-    def parse(self, file_path: str) -> dict[str, list[Endpoint]]:
+    def parse(self, file_path: str) -> dict[str, dict[str, list[Endpoint]]]:
         spec = self._load_file(file_path)
         suites: dict[str, list[Endpoint]] = {}
 
@@ -28,7 +28,8 @@ class SwaggerParser:
 
                 suites[tag].append(endpoint)
 
-        return suites
+        project = {spec.get("info", {}).get("title", "ApiProject"): suites}
+        return project
 
     def _load_file(self, file_path: str) -> dict:
         with open(file_path, "r", encoding="utf-8") as f:
