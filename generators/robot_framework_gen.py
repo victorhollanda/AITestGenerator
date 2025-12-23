@@ -18,7 +18,7 @@ class RobotFrameworkGen:
 
 
 
-    def _create_project_structure(base_path: str):
+    def _create_project_structure(self, base_path: str):
         base = Path(base_path)
 
         folders = [
