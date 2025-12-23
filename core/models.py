@@ -16,6 +16,7 @@ class Response:
 
 @dataclass
 class Endpoint:
+    tag: str
     method: str
     path: str
     parameters: list[Parameter]
