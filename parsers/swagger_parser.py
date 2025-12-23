@@ -3,16 +3,18 @@ from core.models import Endpoint, Parameter, Response
 
 
 class SwaggerParser:
-    def parse(self, file_path: str) -> list[Endpoint]:
+    def parse(self, file_path: str) -> dict[str, list[Endpoint]]:
         spec = self._load_file(file_path)
-        endpoints: list[Endpoint] = []
+        suites: dict[str, list[Endpoint]] = {}
 
         paths = spec.get("paths", {})
 
         for path, methods in paths.items():
             for method, data in methods.items():
-                print(method)
+                tags = data.get("tags", [])
+                tag = tags[0] if tags else "default"
                 endpoint = Endpoint(
+                    tag= tag,
                     path= path,
                     method= method.upper(),
                     summary= data.get("summary", ""),
@@ -20,9 +22,13 @@ class SwaggerParser:
                     request_body= self._parse_request_body(data),
                     responses= self._parse_responses(data),
                 )
-                endpoints.append(endpoint)
 
-        return endpoints
+                if tag not in suites:
+                    suites[tag] = []
+
+                suites[tag].append(endpoint)
+
+        return suites
 
     def _load_file(self, file_path: str) -> dict:
         with open(file_path, "r", encoding="utf-8") as f:
