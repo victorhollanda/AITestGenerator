@@ -1,13 +1,8 @@
-from parsers.swagger_parser import SwaggerParser
-from generators.robot_framework_gen import RobotFrameworkGen
+from services.generate_tests import GenerateTests
 
 def main():
-    parser = SwaggerParser()
-    project_name = "TestesAPI"
-    project_api = parser.parse("swagger.json")
-    generator = RobotFrameworkGen()
-    
-    generator.generate_tests(project_name, project_api)
+    generator = GenerateTests()
+    generator.generate_robot_tests_from_swagger("swagger.json")
 
 if __name__ == "__main__":
     main()

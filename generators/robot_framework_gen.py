@@ -15,10 +15,6 @@ class RobotFrameworkGen:
             for suite, endpoints in suites.items():
                 self._create_project_file(suite, endpoints, tests_path)
 
-
-
-
-
     def _create_project_structure(self, base_path: str):
         base = Path(base_path)
 
@@ -45,7 +41,11 @@ class RobotFrameworkGen:
             f.write("Library    RequestsLibrary\n\n")
             f.write("*** Test Cases ***\n")
 
-            for endpoint in endpoints:
-                test_name = f"{endpoint.method} {endpoint.path}"
+            for index, endpoint in enumerate(endpoints):
+                if index < 10:
+                    test_name = f"TC0{index+1} - {endpoint.method} {endpoint.path}"
+                else:
+                    test_name = f"TC{index+1} - {endpoint.method} {endpoint.path}"
+
                 f.write(f"{test_name}\n")
-                f.write(f"    Log    {endpoint.summary}\n\n")
+                f.write(f"    Log    summary: {endpoint.summary}\n\n")
