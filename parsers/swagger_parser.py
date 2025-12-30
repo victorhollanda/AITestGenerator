@@ -16,7 +16,7 @@ class SwaggerParser:
                 endpoint = Endpoint(
                     tag= tag,
                     path= path,
-                    method= method.upper(),
+                    method= method.lower(),
                     summary= data.get("summary", ""),
                     parameters= self._parse_parameters(data),
                     request_body= self._parse_request_body(data),
