@@ -3,10 +3,11 @@ from generators.robot_framework_gen import RobotFrameworkGen
 
 def main():
     parser = SwaggerParser()
-    project = parser.parse("swagger.json")
-
+    project_name = "TestesAPI"
+    project_api = parser.parse("swagger.json")
     generator = RobotFrameworkGen()
-    generator.generate_tests(project, output_path="./output")
+    
+    generator.generate_tests(project_name, project_api)
 
 if __name__ == "__main__":
     main()

@@ -3,11 +3,12 @@ from core.models import Endpoint, Parameter, Response
 
 class RobotFrameworkGen:
 
-    def generate_tests(self, project: dict[str, dict[str, list[Endpoint]]], output_path: str = "./output"):
-        base_path = Path(output_path)
+    def generate_tests(self, project_name, project_api: dict[str, dict[str, list[Endpoint]]], output_path: str = "./output"):
+        base_path = Path(output_path) / project_name
+        base_path.mkdir(parents=True, exist_ok=True)
         self._create_project_structure(base_path)
 
-        for api_name, suites in project.items():
+        for api_name, suites in project_api.items():
             tests_path = base_path / "tests" / "api" / api_name
             tests_path.mkdir(parents=True, exist_ok=True)
 
